@@ -19,36 +19,24 @@
 
     <!-- Main Content -->
     <main class="content">
-        <h1>Welcome, Customer!</h1>
+        <h1>Welcome, {{ user.username }}!</h1>
         <p>Browse through the menu below to choose your items and place your order.</p>
 
         <!-- Menu Section -->
         <section class="menu-section">
             <h2>Our Menu</h2>
-            <div class="menu-item">
-                <img src="{% static 'images/menu-item1.jpg' %}" alt="Dish 1">
-                <h3>Dish 1</h3>
-                <p>Description of Dish 1</p>
-                <p>Price: $10.99</p>
-                <button class="order-button">Order Now</button>
+            <div class="menu-items-container">
+                {% for item in menu_items %}
+                    <div class="menu-item">
+                        <img src="{{ item.image_url }}" alt="{{ item.name }}">
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.description }}</p>
+                        <p>Price: ${{ item.price }}</p>
+                        <button class="order-button">Order Now</button>
+                    </div>
+                {% endfor %}
             </div>
-
-            <div class="menu-item">
-                <img src="{% static 'images/menu-item2.jpg' %}" alt="Dish 2">
-                <h3>Dish 2</h3>
-                <p>Description of Dish 2</p>
-                <p>Price: $12.99</p>
-                <button class="order-button">Order Now</button>
-            </div>
-
-            <div class="menu-item">
-                <img src="{% static 'images/menu-item3.jpg' %}" alt="Dish 3">
-                <h3>Dish 3</h3>
-                <p>Description of Dish 3</p>
-                <p>Price: $8.99</p>
-                <button class="order-button">Order Now</button>
-            </div>
-        </section>
+        </section>        
     </main>
 
 </body>

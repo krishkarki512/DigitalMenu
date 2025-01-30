@@ -1,10 +1,8 @@
 from django.shortcuts import render
+from .models import MenuItem
 
 def index(request):
     return render(request, 'index.html')
-
-def home(request):
-    return render(request, 'home.html')
 
 # View for Admin Dashboard
 def admin_dashboard(request):
@@ -12,7 +10,8 @@ def admin_dashboard(request):
 
 # View for Customer Menu
 def customer_menu(request):
-    return render(request, 'customer.html')
+    menu_items = MenuItem.objects.all()
+    return render(request, 'customer.html', {'menu_items': menu_items})
 
 # View for Chef Orders
 def chef_orders(request):

@@ -128,7 +128,6 @@ html, body {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     position: relative;
-    bottom: 0;
     width: 100%;
 }
 
@@ -167,6 +166,30 @@ html, body {
     color: black;
     font-size: 18px; /* Slightly larger font size */
 }
+
+.signin {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff; /* Blue color */
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
 
 /* Image Box */
 .image-box img {
@@ -207,6 +230,7 @@ html, body {
     background-color: rgba(255, 255, 255, 0.8);
     margin: 15px 0;
     border-radius: 8px;
+    text-align: center;
 }
 
 .menu-section h2 {
@@ -214,16 +238,25 @@ html, body {
     margin-bottom: 20px;
 }
 
+/* Arrange menu items in a row */
+.menu-items-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center; /* Center align items */
+    gap: 20px; /* Space between items */
+}
+
+/* Style each menu item */
 .menu-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(222, 27, 27, 0.9);
     padding: 20px;
-    margin-bottom: 15px;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px; /* Set fixed width for each item */
 }
 
 .menu-item img {
@@ -257,6 +290,7 @@ html, body {
 .order-button:hover {
     background-color: #218838;
 }
+
 /* Admin.html */
 /* Admin Dashboard */
 .admin-dashboard {

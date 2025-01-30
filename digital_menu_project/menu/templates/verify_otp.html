@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="{% static 'css/shared_style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Verify OTP</h2>
+
+        <form method="post" class="otp-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="otp" class="label">Enter OTP:</label>
+                <input type="text" name="otp" id="otp" class="input" required>
+            </div>
+
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn">Verify OTP</button>
+        </form>
+
+       <div class="resend-otp">
+       <div class="resend-otp-container">
+        <form method="post" action="{% url 'resend_otp' %}">
+            {% csrf_token %}
+            <button type="submit">Resend OTP</button>
+        </form>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
+

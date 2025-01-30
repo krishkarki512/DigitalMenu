@@ -14,9 +14,10 @@
     <header class="header">
         <div class="navbar">
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="#">Services</a></li>
             </ul>
+            
         </div>
         <div class="contact">Contact Us: 9807318425</div>
     </header>
@@ -25,7 +26,9 @@
     <main class="content">
         <h1>Welcome to Our Website</h1>
         <!-- Two Section Container -->
+         
         <div class="inline-container">
+            
             <div class="description-box">
                 <h2>About Us</h2><br>
 
@@ -35,12 +38,15 @@
                 <img src="{% static 'images/img3.jpg' %}" alt="Placeholder Image">
             </div>
         </div>
+        
+        <div class="signin">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login_register' %}" class="btn">Sign In</a>
+            {% endif %}
+        </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <button class="get-started"><a href="{% url 'home' %}">Get Started</a></button>
-    </footer>
 
 </body>
 </html>
