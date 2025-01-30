@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <input type="text" class="search-bar" placeholder="Search">
+        <div class="profile-icon">👤</div>
+        <div class="contact">Contact Us: 9807318425</div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome to the Home Page!</h1>
+        <p>Choose your role below to explore the features.</p>
+
+        <!-- Section for Customer -->
+        <div class="role-section customer">
+            <h2>Customer</h2>
+            <p>Browse the menu, place orders, and enjoy your meal with ease!</p>
+            <a href="{% url 'customer_menu' %}"><button class="role-button">Explore as Customer</button></a>
+        </div>
+
+        <!-- Section for Admin -->
+        <div class="role-section admin">
+            <h2>Admin</h2>
+            <p>Manage menu items, view orders, and control system settings.</p>
+            <a href="{% url 'admin_dashboard' %}"><button class="role-button">Explore as Admin</button></a>
+        </div>
+
+        <!-- Section for Chef -->
+        <div class="role-section chef">
+            <h2>Chef</h2>
+            <p>View orders and prepare meals based on customer requests.</p>
+            <a href="{% url 'chef_orders' %}"><button class="role-button">Explore as Chef</button></a>
+        </div>
+    </main>
+
+</body>
+</html>

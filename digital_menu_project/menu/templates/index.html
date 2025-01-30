@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Menu</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Services</a></li>
+            </ul>
+        </div>
+        <div class="contact">Contact Us: 9807318425</div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome to Our Website</h1>
+        <!-- Two Section Container -->
+        <div class="inline-container">
+            <div class="description-box">
+                <h2>About Us</h2><br>
+
+                <p>A digital menu refers to an electronic display that presents a menu for customers to view, typically in restaurants, cafes, bars, or other service-based establishments. Unlike traditional printed menus, digital menus are displayed on screens, which can range from tablets to large interactive monitors or projectors.</p>
+            </div>
+            <div class="image-box">
+                <img src="{% static 'images/img3.jpg' %}" alt="Placeholder Image">
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <button class="get-started"><a href="{% url 'home' %}">Get Started</a></button>
+    </footer>
+
+</body>
+</html>

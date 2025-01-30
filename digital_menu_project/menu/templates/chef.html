@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef - Orders</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <input type="text" class="search-bar" placeholder="Search for an order">
+        <div class="profile-icon">👤</div>
+        <div class="contact">Contact Us: 9807318425</div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome, Chef!</h1>
+        <p>View and manage customer orders below.</p>
+
+        <!-- Orders Section -->
+        <section class="orders-section">
+            <h2>Pending Orders</h2>
+            <div class="order-item">
+                <h3>Order #1</h3>
+                <p>Dish: Dish 1</p>
+                <p>Customer: John Doe</p>
+                <button class="action-button">Mark as Cooking</button>
+                <button class="action-button">Mark as Complete</button>
+            </div>
+
+            <div class="order-item">
+                <h3>Order #2</h3>
+                <p>Dish: Dish 2</p>
+                <p>Customer: Jane Smith</p>
+                <button class="action-button">Mark as Cooking</button>
+                <button class="action-button">Mark as Complete</button>
+            </div>
+
+            <div class="order-item">
+                <h3>Order #3</h3>
+                <p>Dish: Dish 3</p>
+                <p>Customer: Bob Johnson</p>
+                <button class="action-button">Mark as Cooking</button>
+                <button class="action-button">Mark as Complete</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

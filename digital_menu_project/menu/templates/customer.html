@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer - Menu</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <input type="text" class="search-bar" placeholder="Search the menu">
+        <div class="profile-icon">👤</div>
+        <div class="contact">Contact Us: 9807318425</div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome, Customer!</h1>
+        <p>Browse through the menu below to choose your items and place your order.</p>
+
+        <!-- Menu Section -->
+        <section class="menu-section">
+            <h2>Our Menu</h2>
+            <div class="menu-item">
+                <img src="{% static 'images/menu-item1.jpg' %}" alt="Dish 1">
+                <h3>Dish 1</h3>
+                <p>Description of Dish 1</p>
+                <p>Price: $10.99</p>
+                <button class="order-button">Order Now</button>
+            </div>
+
+            <div class="menu-item">
+                <img src="{% static 'images/menu-item2.jpg' %}" alt="Dish 2">
+                <h3>Dish 2</h3>
+                <p>Description of Dish 2</p>
+                <p>Price: $12.99</p>
+                <button class="order-button">Order Now</button>
+            </div>
+
+            <div class="menu-item">
+                <img src="{% static 'images/menu-item3.jpg' %}" alt="Dish 3">
+                <h3>Dish 3</h3>
+                <p>Description of Dish 3</p>
+                <p>Price: $8.99</p>
+                <button class="order-button">Order Now</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
