@@ -1,0 +1,47 @@
+{% load static %}
+{% include 'navbar.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <h2>Your Order History</h2>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% for order_detail in order_details %}
+        <div class="order">
+            <h3>Order #{{ order_detail.order.id }} - {{ order_detail.order.status }}</h3>
+            <p><strong>Total Price:</strong> ${{ order_detail.order.total_price }}</p>
+            <p><strong>Date:</strong> {{ order_detail.order.created_at }}</p>
+            <p><strong>Table Number:</strong> {{ order_detail.order.table_number }}</p>
+
+            <ul>
+                {% for item in order_detail.items %}
+                    <li>{{ item.quantity }} x {{ item.menu_item.name }} - ${{ item.menu_item.price }}</li>
+                {% endfor %}
+            </ul>
+
+            {% if order_detail.order.status == "Pending" %}
+                <a href="{% url 'modify_order' order_detail.order.id %}" class="btn">Modify</a>
+                <a href="{% url 'cancel_order' order_detail.order.id %}" class="btn cancel">Cancel</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'customer_menu' %}" class="btn">Back to Menu</a>
+
+</body>
+</html>

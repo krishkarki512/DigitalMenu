@@ -1,5 +1,5 @@
 {% load static %}
-
+{% include 'navbar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-
-    <!-- Header -->
-    <header class="header">
-        <input type="text" class="search-bar" placeholder="Search the menu">
-        <div class="profile-icon">👤</div>
-        <div class="contact">Contact Us: 9807318425</div>
-    </header>
 
     <!-- Main Content -->
     <main class="content">
@@ -32,7 +25,10 @@
                         <h3>{{ item.name }}</h3>
                         <p>{{ item.description }}</p>
                         <p>Price: ${{ item.price }}</p>
-                        <button class="order-button">Order Now</button>
+                        <form action="{% url 'add_to_cart' item.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="order-button">Add to Cart</button>
+                        </form>
                     </div>
                 {% endfor %}
             </div>

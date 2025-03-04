@@ -16,6 +16,15 @@ html, body {
     color: white;
 }
 
+.messages {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+}
+
 /* Header */
 .header {
     display: flex;

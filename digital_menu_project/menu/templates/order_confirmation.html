@@ -1,0 +1,41 @@
+<!-- order_confirmation.html -->
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">Your Restaurant</div>
+        <div class="contact">Contact Us: 9807318425</div>
+    </header>
+
+    <main class="content">
+        <h1>Thank you for your order!</h1>
+        <p>Your order has been placed successfully. Here are the details:</p>
+
+        <section class="order-details">
+            <h2>Order #{{ order.id }}</h2>
+            <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            <p><strong>Table Number:</strong> {{ order.table_number }}</p> 
+
+            <h3>Items:</h3>
+            <ul>
+                {% for item in cart_items %}
+                    <li>{{ item.quantity }} x {{ item.item.name }} - ${{ item.item.price }} each</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <button onclick="window.location.href='{% url 'customer_menu' %}'">Go Back to Menu</button>
+    </main>
+
+</body>
+</html>

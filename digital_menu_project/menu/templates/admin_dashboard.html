@@ -1,0 +1,175 @@
+<!-- admin_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #222;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Admin Dashboard</h1>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+    <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+</nav>
+
+<div class="container">
+    <h2>Menu Items</h2>
+    <a href="{% url 'add_menu_item' %}" style="display: inline-block; padding: 10px 15px; background-color: green; color: white; text-decoration: none; border-radius: 5px;">Add New Item</a>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for item in menu_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>${{ item.price }}</td>
+            <td>
+                <a href="{% url 'edit_menu_item' item.id %}">Edit</a>
+                <a href="{% url 'delete_menu_item' item.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Display Orders -->
+    <h2>Orders</h2>
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>User</th>
+        <th>Table Number</th>
+        <th>Status</th>
+        <th>Total Price</th>
+        <th>Actions</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.user.username }}</td>
+        <td>{{ order.table_number }}</td>
+        <td>{{ order.status }}</td>
+        <td>${{ order.total_price }}</td>
+        <td>
+            <a href="{% url 'update_order_status' order.id %}">Update Status</a> |
+            <a href="{% url 'delete_order' order.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+    <!-- Display Users -->
+    <h2>Users</h2>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a href="{% url 'edit_user' user.id %}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Dashboard Statistics -->
+<h2>Dashboard Statistics</h2>
+<div style="display: flex; justify-content: space-between; padding: 10px;">
+    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+        <h3>Total Orders</h3>
+        <p>{{ total_orders }}</p>
+    </div>
+    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+        <h3>Total Revenue</h3>
+        <p>${{ total_revenue }}</p>
+    </div>
+    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+        <h3>Total Users</h3>
+        <p>{{ total_users }}</p>
+    </div>
+</div>
+
+<!-- Top Selling Menu Items -->
+<h2>Top Selling Items</h2>
+<table>
+    <tr>
+        <th>Item Name</th>
+        <th>Quantity Sold</th>
+    </tr>
+    {% for item in top_items %}
+    <tr>
+        <td>{{ item.menu_item__name }}</td>
+        <td>{{ item.total_sold }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No sales yet</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+</div>
+
+</body>
+</html>
