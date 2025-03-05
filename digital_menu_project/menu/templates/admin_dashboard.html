@@ -61,9 +61,50 @@
 <nav>
     <a href="/">Home</a>
     <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="btn">Logout</a>
+    {% else %}
+    <a href="{% url 'login_register' %}" class="btn">Sign In</a>
+    {% endif %}
 </nav>
 
 <div class="container">
+    <!-- Dashboard Statistics -->
+    <h2>Dashboard Statistics</h2>
+    <div style="display: flex; justify-content: space-between; padding: 10px;">
+        <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+            <h3>Total Orders</h3>
+            <p>{{ total_orders }}</p>
+        </div>
+        <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+            <h3>Total Revenue</h3>
+            <p>Rs. {{ total_revenue }}</p>
+        </div>
+        <div style="background: #ddd; padding: 20px; border-radius: 8px;">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+    </div>
+    
+    <!-- Top Selling Menu Items -->
+    <h2>Top Selling Items</h2>
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity Sold</th>
+        </tr>
+        {% for item in top_items %}
+        <tr>
+            <td>{{ item.menu_item__name }}</td>
+            <td>{{ item.total_sold }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No sales yet</td>
+        </tr>
+        {% endfor %}
+    </table>
+
     <h2>Menu Items</h2>
     <a href="{% url 'add_menu_item' %}" style="display: inline-block; padding: 10px 15px; background-color: green; color: white; text-decoration: none; border-radius: 5px;">Add New Item</a>
     
@@ -78,7 +119,7 @@
         <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
-            <td>${{ item.price }}</td>
+            <td>Rs. {{ item.price }}</td>
             <td>
                 <a href="{% url 'edit_menu_item' item.id %}">Edit</a>
                 <a href="{% url 'delete_menu_item' item.id %}">Delete</a>
@@ -104,7 +145,7 @@
         <td>{{ order.user.username }}</td>
         <td>{{ order.table_number }}</td>
         <td>{{ order.status }}</td>
-        <td>${{ order.total_price }}</td>
+        <td>Rs. {{ order.total_price }}</td>
         <td>
             <a href="{% url 'update_order_status' order.id %}">Update Status</a> |
             <a href="{% url 'delete_order' order.id %}">Delete</a>
@@ -131,42 +172,6 @@
         </tr>
         {% endfor %}
     </table>
-
-    <!-- Dashboard Statistics -->
-<h2>Dashboard Statistics</h2>
-<div style="display: flex; justify-content: space-between; padding: 10px;">
-    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
-        <h3>Total Orders</h3>
-        <p>{{ total_orders }}</p>
-    </div>
-    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
-        <h3>Total Revenue</h3>
-        <p>${{ total_revenue }}</p>
-    </div>
-    <div style="background: #ddd; padding: 20px; border-radius: 8px;">
-        <h3>Total Users</h3>
-        <p>{{ total_users }}</p>
-    </div>
-</div>
-
-<!-- Top Selling Menu Items -->
-<h2>Top Selling Items</h2>
-<table>
-    <tr>
-        <th>Item Name</th>
-        <th>Quantity Sold</th>
-    </tr>
-    {% for item in top_items %}
-    <tr>
-        <td>{{ item.menu_item__name }}</td>
-        <td>{{ item.total_sold }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="2">No sales yet</td>
-    </tr>
-    {% endfor %}
-</table>
 
 
 </div>

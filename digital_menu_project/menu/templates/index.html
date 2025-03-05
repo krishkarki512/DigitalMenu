@@ -15,7 +15,14 @@
         <div class="navbar">
             <ul>
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="#">Services</a></li>
+                <li> {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                {% else %}
+                    <a href="{% url 'customer_menu' %}">Dashboard</a>
+                {% endif %}
+            {% endif %}                           
+                </li>
             </ul>
             
         </div>

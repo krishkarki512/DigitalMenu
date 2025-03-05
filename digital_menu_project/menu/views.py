@@ -1,4 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
+from django.core.paginator import Paginator
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from django.contrib.auth.decorators import login_required
 from .models import MenuItem, Order, OrderItem
 from .forms import UserProfileForm, ModifyOrderForm
@@ -8,10 +12,57 @@ from .forms import ModifyOrderForm
 def index(request):
     return render(request, 'index.html')
 
-# View for Customer Menu
 def customer_menu(request):
+    query = request.GET.get('q', '')
+    
+    # Initially, fetch all menu items
     menu_items = MenuItem.objects.all()
-    return render(request, 'customer.html', {'menu_items': menu_items})
+
+    # If there is a search query, filter the menu items
+    if query:
+        menu_items = menu_items.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+
+    # Implement pagination after the filtering
+    paginator = Paginator(menu_items, 6)  # Show 6 items per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # AI-Based Recommendations: Only generate recommendations if there is a search query
+    recommended_items = []
+    if query:
+        all_items = list(MenuItem.objects.all())
+        item_texts = [item.description for item in all_items]
+
+        if item_texts:
+            vectorizer = TfidfVectorizer(stop_words='english')
+            tfidf_matrix = vectorizer.fit_transform(item_texts)
+            cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+            item_indices = {item.id: idx for idx, item in enumerate(all_items)}
+            recommended_items_set = set()
+
+            for item in menu_items:
+                idx = item_indices.get(item.id)
+                if idx is not None:
+                    similar_scores = list(enumerate(cosine_sim[idx]))
+                    similar_scores = sorted(similar_scores, key=lambda x: x[1], reverse=True)[1:4]
+
+                    for i, _ in similar_scores:
+                        recommended_items_set.add(all_items[i])
+
+            recommended_items = list(recommended_items_set)
+
+    hot_deals = MenuItem.objects.filter(is_hot_deal=True)
+
+    return render(request, 'customer.html', {
+        'page_obj': page_obj,
+        'query': query,
+        'recommended_items': recommended_items,
+        'hot_deals': hot_deals
+    })
+
 
 @login_required
 def profile(request):

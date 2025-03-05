@@ -24,11 +24,11 @@
                 <div class="item-details">
                     <h3>{{ item.item.name }}</h3>
                     <p>{{ item.item.description }}</p>
-                    <p><strong>Price:</strong> ${{ item.item.price }}</p>
+                    <p><strong>Price:</strong> Rs. {{ item.item.price }}</p>
                     <p><strong>Quantity:</strong> {{ item.quantity }}</p>
                 </div>
                 <div class="item-total">
-                    <p>Total: ${{ item.item_total }}</p>
+                    <p>Total: Rs. {{ item.item_total }}</p>
                 </div>
             </div>
             {% endfor %}
@@ -36,7 +36,7 @@
 
         <!-- Cart Summary -->
         <div class="cart-summary">
-            <p><strong>Total Price:</strong> ${{ total_price }}</p>
+            <p><strong>Total Price:</strong> Rs. {{ total_price }}</p>
             <form action="{% url 'place_order' %}" method="POST">
                 {% csrf_token %}
                 
@@ -76,10 +76,10 @@
         }
         .cart-item {
             display: flex;
-            border: 1px solid #ddd;
+            border: 1px solid #2321a3;
             padding: 15px;
             border-radius: 8px;
-            background-color: #f9f9f9;
+            background-color: #873465;
         }
         .cart-item img {
             width: 150px;

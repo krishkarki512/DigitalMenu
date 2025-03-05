@@ -57,7 +57,7 @@ from .models import MenuItem
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ['name', 'description', 'price', 'image_url']
+        fields = ['name', 'description', 'price', 'image_url', 'is_hot_deal']
 
 class OrderForm(forms.ModelForm):
     table_number = forms.ChoiceField(choices=[(i, f"Table {i}") for i in range(1, 21)])  # Example: 20 tables

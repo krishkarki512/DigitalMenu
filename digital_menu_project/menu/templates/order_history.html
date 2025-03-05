@@ -24,7 +24,7 @@
     {% for order_detail in order_details %}
         <div class="order">
             <h3>Order #{{ order_detail.order.id }} - {{ order_detail.order.status }}</h3>
-            <p><strong>Total Price:</strong> ${{ order_detail.order.total_price }}</p>
+            <p><strong>Total Price:</strong> Rs. {{ order_detail.order.total_price }}</p>
             <p><strong>Date:</strong> {{ order_detail.order.created_at }}</p>
             <p><strong>Table Number:</strong> {{ order_detail.order.table_number }}</p>
 

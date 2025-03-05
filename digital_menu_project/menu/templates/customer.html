@@ -7,6 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer - Menu</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+    </style>
 </head>
 <body>
 
@@ -15,16 +34,82 @@
         <h1>Welcome, {{ user.username }}!</h1>
         <p>Browse through the menu below to choose your items and place your order.</p>
 
+        <!-- Search Bar -->
+        <form method="GET" action="{% url 'customer_menu' %}" class="search-form">
+            <input type="text" name="q" placeholder="Search menu items..." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+
+<!-- Hot Deals Section -->
+{% if hot_deals %}
+<section class="menu-section">
+    <h2 style="font-size: 3em; color: #FF0000;">🔥 Top Selling 🔥</h2>
+        <div class="menu-items-container" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            {% for item in hot_deals %}
+                <div class="menu-item" style="border: 1px solid #ddd; padding: 15px; margin: 10px; border-radius: 8px; text-align: center; width: 30%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff; transition: transform 0.3s;">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 100%; height: auto; border-radius: 5px;">
+                    <h3 style="font-size: 1.2em; color: #333;">{{ item.name }}</h3>
+                    <p style="font-size: 1em; color: #777;">{{ item.description }}</p>
+                    <p style="font-size: 1em; color: #777;">Price: Rs. {{ item.price }}</p>
+                    <form action="{% url 'add_to_cart' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="order-button" style="background-color: #ff6347; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">Add to Cart</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+</section>
+{% endif %}
+
         <!-- Menu Section -->
         <section class="menu-section">
             <h2>Our Menu</h2>
             <div class="menu-items-container">
-                {% for item in menu_items %}
+                {% if page_obj %}
+                    {% for item in page_obj %}
+                        <div class="menu-item">
+                            <img src="{{ item.image_url }}" alt="{{ item.name }}">
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.description }}</p>
+                            <p>Price: Rs. {{ item.price }}</p>
+                            <form action="{% url 'add_to_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="order-button">Add to Cart</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No items found.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+        
+        <!-- Recommendations Section -->
+        {% if recommended_items %}
+        <section class="recommendations">
+            <h2>You may also like</h2>
+            <div class="menu-items-container">
+                {% for item in recommended_items %}
                     <div class="menu-item">
                         <img src="{{ item.image_url }}" alt="{{ item.name }}">
                         <h3>{{ item.name }}</h3>
                         <p>{{ item.description }}</p>
-                        <p>Price: ${{ item.price }}</p>
+                        <p>Price: Rs. {{ item.price }}</p>
                         <form action="{% url 'add_to_cart' item.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="order-button">Add to Cart</button>
@@ -32,7 +117,8 @@
                     </div>
                 {% endfor %}
             </div>
-        </section>        
+        </section>
+        {% endif %}
     </main>
 
 </body>
