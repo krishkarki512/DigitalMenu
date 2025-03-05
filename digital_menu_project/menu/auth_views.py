@@ -70,7 +70,7 @@ def login_register_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("login_register"))
 
 def confirm_email(request):
     if request.method == 'POST':

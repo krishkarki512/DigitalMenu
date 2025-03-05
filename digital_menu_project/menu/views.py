@@ -109,6 +109,22 @@ def view_cart(request):
 
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price, 'tables': tables})
 
+def remove_from_cart(request, item_id):
+    # Convert item_id to string (because it is stored as a string in the cart)
+    item_id_str = str(item_id)
+    
+    # Get the cart from the session
+    cart = request.session.get('cart', {})
+    
+    # Remove the item from the cart if it exists
+    if item_id_str in cart:
+        del cart[item_id_str]
+    
+    # Save the updated cart back to the session
+    request.session['cart'] = cart
+    
+    # Redirect back to the cart page
+    return redirect('view_cart')
 
 def place_order(request):
     cart = request.session.get('cart', {})
