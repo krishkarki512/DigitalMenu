@@ -30,7 +30,7 @@
 
             <ul>
                 {% for item in order_detail.items %}
-                    <li>{{ item.quantity }} x {{ item.menu_item.name }} - ${{ item.menu_item.price }}</li>
+                    <li>{{ item.quantity }} x {{ item.menu_item.name }} - Rs. {{ item.menu_item.price }}</li>
                 {% endfor %}
             </ul>
 

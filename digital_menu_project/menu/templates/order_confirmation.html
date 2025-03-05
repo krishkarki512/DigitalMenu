@@ -29,7 +29,7 @@
             <h3>Items:</h3>
             <ul>
                 {% for item in cart_items %}
-                    <li>{{ item.quantity }} x {{ item.item.name }} - ${{ item.item.price }} each</li>
+                    <li>{{ item.quantity }} x {{ item.item.name }} - Rs. {{ item.item.price }} each</li>
                 {% endfor %}
             </ul>
         </section>

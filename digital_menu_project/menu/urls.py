@@ -19,6 +19,7 @@ urlpatterns = [
     path('delete_menu_item/<int:item_id>/', admin_views.delete_menu_item, name='delete_menu_item'),
     path('update_order_status/<int:order_id>/', admin_views.update_order_status, name='update_order_status'),
     path('delete_order/<int:order_id>/', admin_views.delete_order, name='delete_order'),
+    path('delete_user/<int:user_id>/', admin_views.delete_user, name='delete_user'),
     path('edit_user/<int:user_id>/', admin_views.edit_user, name='edit_user'),
     path('update_order/<int:order_id>/', admin_views.update_order, name='update_order'),
 

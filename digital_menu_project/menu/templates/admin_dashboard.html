@@ -121,7 +121,7 @@
             <td>{{ item.description }}</td>
             <td>Rs. {{ item.price }}</td>
             <td>
-                <a href="{% url 'edit_menu_item' item.id %}">Edit</a>
+                <a href="{% url 'edit_menu_item' item.id %}">Edit</a> |
                 <a href="{% url 'delete_menu_item' item.id %}">Delete</a>
             </td>
         </tr>
@@ -167,7 +167,8 @@
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
             <td>
-                <a href="{% url 'edit_user' user.id %}">Edit</a>
+                <a href="{% url 'edit_user' user.id %}">Edit</a> |
+                <a href="{% url 'delete_user' user.id %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
