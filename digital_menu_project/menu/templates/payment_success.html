@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success | DigitalMenu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .order-info {
+            margin-top: 30px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .order-info p {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>Payment Success</h3>
+        <p>Your order has been successfully paid!</p>
+
+        <div class="order-info">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Total Amount:</strong> NPR {{ total_price }}</p>
+            <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+        </div>
+
+        <a href="{% url 'customer_menu' %}" class="btn">Back to Menu</a>
+
+        <div class="footer">
+            <p>&copy; 2025 DigitalMenu. All rights reserved.</p>
+        </div>
+    </div>
+
+</body>
+</html>

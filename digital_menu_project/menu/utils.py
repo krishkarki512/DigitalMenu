@@ -8,6 +8,49 @@ from decimal import Decimal
 from datetime import datetime
 from django.utils import timezone
 
+from .models import Order, OrderItem, Payment
+from decimal import Decimal
+
+def update_database_after_payment(transaction_id, user, total_price, payment_method, order_id):
+    try:
+        # Retrieve the order using the order_id
+        order = Order.objects.get(id=order_id, user=user)
+        
+        # Update the order payment status to 'Paid' and its status to 'Confirmed'
+        order.payment_status = 'Paid'
+        order.status = 'Confirmed'  # You can set this as per your business logic
+        order.save()
+
+        # Check if a payment already exists for this order
+        payment = Payment.objects.filter(order=order).first()
+        
+        if payment:
+            # If payment already exists, update the existing payment details
+            payment.transaction_id = transaction_id
+            payment.amount = Decimal(total_price)
+            payment.payment_method = payment_method
+            payment.status = 'Paid'
+            payment.save()  # Save the updated payment
+        else:
+            # If no payment exists, create a new payment record
+            payment = Payment(
+                order=order,
+                transaction_id=transaction_id,
+                payment_method=payment_method,
+                amount=Decimal(total_price),
+                status='Paid'
+            )
+            payment.save()
+
+        # You can also add any additional logic for updating order-related information
+
+        return True  # Successfully updated or created the payment
+
+    except Order.DoesNotExist:
+        return False  # Return False if the order is not found
+    except IntegrityError as e:
+        return False  # Return False in case of integrity errors
+    
 def generate_otp():
     """
     Generate a random six-digit OTP (One-Time Password).

@@ -141,3 +141,5 @@ EMAIL_HOST_PASSWORD = 'urfzozsvhsefjscj'
 AUTH_USER_MODEL = 'menu.User'
 
 LOGIN_URL = '/login_register/'
+
+KHALTI_SECRET_KEY = "c54d590299d843a788b6bd49ff6da91d"

@@ -101,8 +101,8 @@ def view_cart(request):
         total_price += item_total
         cart_items.append({'item': menu_item, 'quantity': quantity, 'item_total': item_total})
 
-    # Get the list of tables that are currently occupied (those with pending orders)
-    occupied_tables = Order.objects.filter(status="Pending").values_list('table_number', flat=True)
+    # Get the list of tables that are currently occupied (those with pending or confirmed orders)
+    occupied_tables = Order.objects.filter(status__in=["Pending", "Confirmed"]).values_list('table_number', flat=True)
     
     # Get available tables (1-20, except occupied ones)
     tables = [i for i in range(1, 21) if i not in occupied_tables]

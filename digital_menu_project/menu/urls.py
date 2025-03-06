@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import admin_views
+from . import payment_views
 from . import auth_views as custom_auth_views
 
 urlpatterns = [
@@ -32,4 +33,9 @@ urlpatterns = [
     path('order_history/', views.order_history, name='order_history'),
     path('order/cancel/<int:order_id>/', views.cancel_order, name='cancel_order'),
     path('order/modify/<int:order_id>/', views.modify_order, name='modify_order'),
+
+
+    path('checkout/<int:order_id>/', payment_views.checkout, name='checkout'),
+    path('khalti/initiate/', payment_views.initiate_khalti, name='initiate_khalti'),
+    path('khalti/verify/', payment_views.verify_khalti, name='verify_khalti'),
 ]

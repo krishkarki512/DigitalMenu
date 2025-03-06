@@ -37,6 +37,8 @@
             {% if order_detail.order.status == "Pending" %}
                 <a href="{% url 'modify_order' order_detail.order.id %}" class="btn">Modify</a>
                 <a href="{% url 'cancel_order' order_detail.order.id %}" class="btn cancel">Cancel</a>
+                <!-- Add a checkout button -->
+                <a href="{% url 'checkout' order_detail.order.id %}" class="btn checkout">Checkout</a>
             {% endif %}
         </div>
     {% endfor %}
