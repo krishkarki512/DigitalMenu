@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from django.contrib.auth.decorators import login_required
-from .models import MenuItem, Order, OrderItem
+from .models import MenuItem, Order, OrderItem, Category
 from .forms import UserProfileForm, ModifyOrderForm
 from django.contrib import messages
 from .forms import ModifyOrderForm
@@ -14,25 +14,33 @@ def index(request):
 
 def customer_menu(request):
     query = request.GET.get('q', '')
-    
-    # Initially, fetch all menu items
+    selected_category = request.GET.get('category', '')
+
+    # Fetch all menu items
     menu_items = MenuItem.objects.all()
 
-    # If there is a search query, filter the menu items
+    # Filter by search query
     if query:
         menu_items = menu_items.filter(
             Q(name__icontains=query) | Q(description__icontains=query)
         )
 
-    # Implement pagination after the filtering
+    # Filter by selected category
+    if selected_category:
+        menu_items = menu_items.filter(category__name=selected_category)
+
+    # Implement pagination
     paginator = Paginator(menu_items, 6)  # Show 6 items per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # AI-Based Recommendations: Only generate recommendations if there is a search query
+    # Fetch all categories for the dropdown
+    categories = Category.objects.all()
+
+    # AI-Based Recommendations (Limited to Same Category & Max 3)
     recommended_items = []
-    if query:
-        all_items = list(MenuItem.objects.all())
+    if menu_items.exists():
+        all_items = MenuItem.objects.filter(category__name=selected_category) if selected_category else MenuItem.objects.all()
         item_texts = [item.description for item in all_items]
 
         if item_texts:
@@ -52,13 +60,15 @@ def customer_menu(request):
                     for i, _ in similar_scores:
                         recommended_items_set.add(all_items[i])
 
-            recommended_items = list(recommended_items_set)
+            recommended_items = list(recommended_items_set)[:3]  # Limit to 3 items
 
     hot_deals = MenuItem.objects.filter(is_hot_deal=True)
 
     return render(request, 'customer.html', {
         'page_obj': page_obj,
         'query': query,
+        'selected_category': selected_category,
+        'categories': categories,
         'recommended_items': recommended_items,
         'hot_deals': hot_deals
     })
